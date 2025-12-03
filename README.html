@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Democrats & Whigs – 19th-Century Party Profiles</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Old-style serif font (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #2b2113;
+      --ink-soft: #4a3a23;
+      --paper: #f7f0df;
+      --paper-deep: #efe1c7;
+      --border: #c0af8a;
+      --accent-dem: #5a3b26;
+      --accent-whig: #3e4b2a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "EB Garamond", "Times New Roman", serif;
+      background: radial-gradient(circle at top, #fdf6e9 0, #e6d6b8 60%, #d4c3a1 100%);
+      color: var(--ink);
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 24px auto 40px;
+      padding: 24px 20px 32px;
+      background: var(--paper);
+      box-shadow: 0 0 0 2px #e3d4b5, 0 18px 40px rgba(0,0,0,0.23);
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 16px,
+        rgba(0,0,0,0.03) 17px,
+        transparent 18px
+      );
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin: 6px 0 0;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    header h1 span {
+      border-bottom: 1px solid var(--ink-soft);
+      padding-bottom: 3px;
+    }
+
+    .subhead {
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .lede {
+      font-size: 0.95rem;
+      max-width: 620px;
+      margin: 12px auto 0;
+      line-height: 1.5;
+    }
+
+    hr.decor {
+      border: none;
+      height: 1px;
+      margin: 18px 0;
+      background-image: linear-gradient(to right, transparent, var(--ink-soft), transparent);
+      opacity: 0.4;
+    }
+
+    /* Simple nav line (like a table of contents) */
+    .nav-line {
+      font-size: 0.8rem;
+      text-align: center;
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+    .nav-line a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      margin: 0 6px;
+      border-bottom: 1px dotted transparent;
+    }
+    .nav-line a:hover {
+      border-bottom-color: var(--ink-soft);
+    }
+
+    main {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 700px) {
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Party sections */
+    .party {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--paper-deep);
+      padding: 12px 12px 14px;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .party-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .party-title {
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .party-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.8;
+    }
+
+    .party-dem .party-label {
+      color: var(--accent-dem);
+    }
+    .party-whig .party-label {
+      color: var(--accent-whig);
+    }
+
+    .portrait {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.35);
+      background: #f4ead8;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+
+    .party-sub {
+      font-size: 0.8rem;
+      font-style: italic;
+      opacity: 0.9;
+      margin-bottom: 6px;
+    }
+
+    .tags {
+      font-size: 0.75rem;
+      font-style: italic;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    /* Flip cards styled as little paper cards */
+    .flip-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    @media (max-width: 550px) {
+      .flip-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .flip-card {
+  height: 220px; /* or any value you prefer */
+  min-height: unset;
+}
+
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+    }
+
+    .flip-card.flipped .flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-face {
+      position: absolute;
+      inset: 0;
+      padding: 6px 8px;
+      border-radius: 3px;
+      backface-visibility: hidden;
+      background: #fdf5e3;
+      border: 1px solid #c2af86;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+      font-size: 0.8rem;
+    }
+
+    .flip-front {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .flip-back {
+      transform: rotateY(180deg);
+      line-height: 1.4;
+    }
+
+    .flip-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 2px;
+    }
+
+    .flip-title {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .flip-note {
+      margin-top: 6px;
+      font-size: 0.75rem;
+      font-style: italic;
+      opacity: 0.9;
+    }
+
+    .small-tip {
+      font-size: 0.75rem;
+      font-style: italic;
+      margin-top: 4px;
+      opacity: 0.85;
+      text-align: right;
+    }
+
+    /* Comparison */
+    .comparison {
+      margin: 18px 0 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: #fdf6e5;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    .comparison-title {
+      text-align: center;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+    }
+
+    .comparison-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    @media (max-width: 700px) {
+      .comparison-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .comparison-col h3 {
+      margin: 0 0 4px;
+      font-size: 0.9rem;
+    }
+
+    .comparison-col ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .comparison-col li {
+      margin-bottom: 2px;
+    }
+
+    /* Quiz */
+    #quiz {
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      padding: 12px 12px 14px;
+      background: #fdf6e5;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    #quiz h2 {
+      margin: 0 0 4px;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .quiz-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 3px;
+    }
+
+    #quiz p {
+      margin: 0 0 8px;
+    }
+
+    .quiz-item {
+      margin-top: 8px;
+    }
+
+    .quiz-question {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .quiz-btn {
+      font-family: inherit;
+      font-size: 0.85rem;
+      padding: 4px 8px;
+      border-radius: 3px;
+      border: 1px solid #b09a6c;
+      background: #faf0dc;
+      color: var(--ink-soft);
+      cursor: pointer;
+      text-align: left;
+      max-width: 100%;
+    }
+
+    .quiz-btn:hover {
+      background: #f4e4c3;
+    }
+
+    .quiz-btn.selected {
+      background: #e3d0aa;
+      border-color: #8a6b3a;
+      box-shadow: 0 0 0 1px #8a6b3a;
+    }
+
+    .quiz-btn.disabled {
+      opacity: 0.45;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .quiz-show-btn {
+      font-family: inherit;
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      border-radius: 3px;
+      border: 1px solid #8a6b3a;
+      background: #f1dfba;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .quiz-show-btn:hover {
+      background: #e8cf9e;
+    }
+
+    .quiz-result {
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px dashed #c6b28b;
+      font-size: 0.9rem;
+    }
+
+    .quiz-score {
+      font-size: 0.8rem;
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.75rem;
+      margin-top: 16px;
+      opacity: 0.8;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="inner">
+      <header id="top">
+        <div class="subhead">United States, 1820s–1840s</div>
+        <h1><span>Democrats &amp; Whigs</span></h1>
+        <div class="lede">
+          A brief set of party profiles in the style of a nineteenth-century pamphlet.  
+          Compare their beliefs, economics, social bases, and criticisms, then see which party your answers resemble.
+        </div>
+      </header>
+
+ <div class="nav-line">
+        <a href="#democrats">Democratic Party</a> ·
+        <a href="#whigs">Whig Party</a> ·
+        <a href="#quiz">Short Quiz</a>
+      </div>
+
+<hr class="decor" />
+
+  <main>
+        <section class="two-cols">
+          <!-- Democrats -->
+          <article id="democrats" class="party party-dem">
+            <div class="party-header">
+              <div>
+                <div class="party-label">Democratic Party (Jacksonian)</div>
+                <div class="party-title">Democrats</div>
+              </div>
+              <img
+                class="portrait"
+                src="Andrew-Jackson.jpg"
+                alt="Andrew Jackson" />
+            </div>
+            <div class="party-sub">
+              Limited federal government, states’ rights, and the “common man” (white male voters).
+            </div>
+            <div class="tags">
+              Core ideas: equal protection of the laws; an aversion to a moneyed aristocracy, exclusive privileges, 
+              and monopolies, and a predilection for the common man; majority rule; and the welfare of the community over the individual.
+            </div>
+
+  <div class="flip-grid">
+              <!-- core beliefs -->
+              <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">Core Beliefs</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">Core Beliefs</div>
+                    believed in limited federal government, broad political participation, 
+                    and protecting the “common man” from concentrated economic power. They opposed a national bank and high tariffs, favored westward expansion, and emphasized states’ rights—while still asserting strong presidential authority when defending majority rule.
+                  </div>
+                </div>
+              </div>
+
+  <!-- economics -->
+  <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">Economics &amp; Money</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">Economics &amp; Money</div>
+                    favored laissez-faire economics, low federal involvement, and a hard-money economy based on gold and silver rather than paper banknotes. 
+                    They opposed the Bank of the United States, distrusted large financial institutions, and believed easy paper credit created corruption and benefited elites over ordinary workers and farmers.
+                  </div>
+                </div>
+              </div>
+
+  <!-- base of support -->
+  <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">Base of Support</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">Base of Support</div>
+                    drew most of their support from small farmers, frontier settlers, urban workers, and the “common man” in the South, 
+                    West, and parts of the mid-Atlantic states. Their base tended to be people suspicious of big banks and concentrated wealth, favoring local control and more democratic participation.
+                  </div>
+                </div>
+              </div>
+
+  <!-- vision of society -->
+  <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">Vision of Society</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">Vision of Society</div>
+                    envisioned a society of independent, self-sufficient farmers, artisans, and workers, 
+                    where political power rested with ordinary white men rather than elites. They believed the ideal republic was a loosely governed, agrarian, and locally directed society that protected individual liberty by limiting centralized economic and political power.
+                  </div>
+                </div>
+              </div>
+
+  <!-- leaders & events -->
+  <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">Leaders &amp; Events</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">Leaders &amp; Events</div>
+                    leadership centered on figures like Andrew Jackson, Martin Van Buren, James K. Polk, and allies who promoted a militant defense of majority rule and limited federal economic power. Major events shaping the movement included the Election of 1828, the Bank War, the Nullification Crisis, Indian Removal, and the economic upheavals surrounding the Specie Circular and Panic of 1837.
+                    linked to Democratic financial policy.
+                  </div>
+                </div>
+              </div>
+
+  <!-- criticisms & legacy -->
+  <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">Criticisms &amp; Legacy</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">Criticisms &amp; Legacy</div>
+                   were praised for expanding political participation among white men and challenging entrenched elites, 
+                   but criticized for harsh Indian Removal policies, support for slavery, and financial instability. Their legacy shaped the Democratic Party as a mass-based party representing ordinary voters and advocating limited federal government and states’ rights.
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+  <div class="small-tip">Note: touch or click a card to turn it over.</div>
+          </article>
+
+  <!-- Whigs -->
+  <article id="whigs" class="party party-whig">
+            <div class="party-header">
+              <div>
+                <div class="party-label">Whig Party</div>
+                <div class="party-title">Whigs</div>
+              </div>
+              <img
+                class="portrait"
+                src="1698px-Henry_Clay.jpg"
+                alt="Henry Clay" />
+            </div>
+            <div class="party-sub">
+              Economic modernization, national planning, and the “American System” of tariffs, bank, and internal improvements.
+            </div>
+            <div class="tags">
+              Core ideas: Whig Party centered on the American System, which called for a strong federal role in the economy through
+               protective tariffs, a national bank, and federally funded internal improvements. 
+               Its core idea was that government should actively promote national economic growth and modernization.
+            </div>
+
+  <div class="flip-grid">
+              <!-- economic modernization -->
+              <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">Economic Modernization</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">Economic Modernization</div>
+                    championed economic modernization, promoting a diversified economy based on manufacturing, commerce, 
+                    and national markets. They saw the growth of factories, banking, and trade as essential for national strength and progress.
+                  </div>
+                </div>
+              </div>
+
+  <!-- federal government -->
+  <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">Federal Government’s Role</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">Federal Government</div>
+                    believed the federal government should actively guide economic development, managing credit, stabilizing the currency, and funding projects that states could not effectively handle alone. They saw government intervention as essential for creating a prosperous, unified nation.
+                  </div>
+                </div>
+              </div>
+
+  <!-- American System -->
+ <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">The American System</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">American System</div>
+                    promoted the American System, which combined protective tariffs, a national bank, and federal funding for roads, canals, and railroads. Its goal was to strengthen the national economy, support industry, and unify the country through infrastructure and commerce.
+                  </div>
+                </div>
+              </div>
+
+  <!-- social bases -->
+  <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">Social Bases</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">Social Bases</div>
+                    drew support mainly from merchants, bankers, factory owners, professionals, and prosperous farmers, especially in the Northeast and parts of the Upper South. They also attracted reform-minded Protestants who valued education, temperance, and social order.
+                  </div>
+                </div>
+              </div>
+
+  <!-- leaders & events -->
+  <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">Leaders &amp; Events</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">Leaders &amp; Events</div>
+                    Key Whig leaders included Henry Clay, Daniel Webster, William Henry Harrison, and Zachary Taylor, who promoted economic development and national unity. Major events included opposition to Jackson’s Bank War, the “log cabin” campaign of 1840, and efforts in Congress to manage sectional tensions over slavery.
+                  </div>
+                </div>
+              </div>
+
+ <!-- criticisms & legacy -->
+ <div class="flip-card">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <div class="flip-title">Criticisms &amp; Legacy</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <div class="flip-label">Criticisms &amp; Legacy</div>
+                    were praised for promoting national development, education, and infrastructure, but criticized as elitist and too friendly to bankers and industrialists. Many former Whigs later helped form the Republican Party in the 1850s, leaving a legacy of supporting a strong federal role in economic and social progress.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<div class="small-tip">Note: each card contains one element of a party profile.</div>
+          </article>
+        </section>
+
+<!-- Comparison -->
+ <section class="comparison">
+          <div class="comparison-title">Brief Comparison of the Two Parties</div>
+          <div class="comparison-cols">
+            <div class="comparison-col">
+              <h3>Democrats</h3>
+              <ul>
+                <li>Limited federal government; emphasis on states’ rights.</li>
+                <li>Suspicious of banks, paper money, and concentrated financial power.</li>
+                <li>Appeal to small farmers, planters, and frontier settlers.</li>
+                <li>Criticised Whigs as elitist and too close to bankers and industrialists.</li>
+              </ul>
+            </div>
+            <div class="comparison-col">
+              <h3>Whigs</h3>
+              <ul>
+                <li>Supported a more active federal government in economic affairs.</li>
+                <li>Backed the national bank, tariffs, and internal improvements.</li>
+                <li>Appeal to merchants, professionals, manufacturers, and prosperous farmers.</li>
+                <li>Criticised Democrats as reckless populists who risked instability.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+<!-- Quiz -->
+ <section id="quiz">
+          <div class="quiz-tag">Short Quiz</div>
+          <h2>Which Party Do Your Answers Resemble?</h2>
+          <p>
+            Answer as if you were living in the 1830s–1840s. You may choose only one reply for each question. When you have finished,
+            press “Show my result”.
+          </p>
+
+  <div class="quiz-item">
+            <div class="quiz-question">1. What should the federal government chiefly concern itself with?</div>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-party="dem" data-q="1">
+                Remaining small, protecting liberty, and leaving most matters to the several states.
+              </button>
+              <button class="quiz-btn" data-party="whig" data-q="1">
+                Guiding the nation’s economic development and undertaking great public works (roads, canals, railroads).
+              </button>
+            </div>
+          </div>
+
+ <div class="quiz-item">
+            <div class="quiz-question">2. How do you regard a powerful national bank?</div>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-party="dem" data-q="2">
+                As a dangerous instrument in the hands of wealthy financiers, threatening the liberties of ordinary citizens.
+              </button>
+              <button class="quiz-btn" data-party="whig" data-q="2">
+                As a useful institution to steady the currency and extend credit to farms, merchants, and manufacturers.
+              </button>
+            </div>
+          </div>
+
+<div class="quiz-item">
+            <div class="quiz-question">3. What sort of America appeals to you more?</div>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-party="dem" data-q="3">
+                A nation of independent small farmers, each with land of his own and little interference from distant authorities.
+              </button>
+              <button class="quiz-btn" data-party="whig" data-q="3">
+                A modern country with busy towns, factories, and trade, closely bound together by roads, canals, and railways.
+              </button>
+            </div>
+          </div>
+
+  <div class="quiz-item">
+            <div class="quiz-question">4. How should tax revenue be used?</div>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-party="dem" data-q="4">
+                With great caution; generous spending on projects may become corruption or favouritism toward certain interests.
+              </button>
+              <button class="quiz-btn" data-party="whig" data-q="4">
+                Energetically; investing in improvements that aid trade and communication benefits the whole nation over time.
+              </button>
+            </div>
+          </div>
+
+<div class="quiz-item">
+            <div class="quiz-question">5. Where does your sympathy lie, instinctively?</div>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-party="dem" data-q="5">
+                With ordinary farmers and labourers who fear being dominated by banks, companies, and distant office-holders.
+              </button>
+              <button class="quiz-btn" data-party="whig" data-q="5">
+                With leaders who prize order, foresight, and education, and who try to plan for the nation’s long-term prosperity.
+              </button>
+            </div>
+          </div>
+
+ <button id="show-result-btn" class="quiz-show-btn">Show my result</button>
+ <button id="redo-quiz-btn" class="quiz-show-btn" style="margin-left:8px;">Redo Quiz</button>
+
+ <div class="quiz-result" id="quiz-result">
+            <em>When you have answered all five questions, press the button above to see your result.</em>
+          </div>
+        </section>
+
+  <footer>
+          Prepared as a brief comparative study of the Democratic and Whig parties in the early nineteenth-century United States.
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Flip card logic
+    document.querySelectorAll(".flip-card").forEach(card => {
+      card.addEventListener("click", () => {
+        card.classList.toggle("flipped");
+      });
+    });
+
+    // Quiz logic – one answer per question + final reveal
+    let answers = {};
+    const totalQuestions = 5;
+    const showResultBtn = document.getElementById("show-result-btn");
+    const resultBox = document.getElementById("quiz-result");
+    const redoQuizBtn = document.getElementById("redo-quiz-btn");
+
+    function resetQuiz() {
+      // Remove selected/disabled from all quiz buttons
+      document.querySelectorAll(".quiz-btn").forEach(btn => {
+        btn.classList.remove("selected", "disabled");
+      });
+      // Reset answers object
+      answers = {};
+      // Reset result box
+      if (resultBox) {
+        resultBox.innerHTML = "<em>When you have answered all five questions, press the button above to see your result.</em>";
+      }
+    }
+
+    document.querySelectorAll(".quiz-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const q = btn.getAttribute("data-q");
+        const party = btn.getAttribute("data-party");
+
+        if (answers[q]) return; // already answered
+
+        answers[q] = party;
+
+        btn.classList.add("selected");
+
+        const siblings = btn.parentElement.querySelectorAll(".quiz-btn");
+        siblings.forEach(b => {
+          if (b !== btn) {
+            b.classList.add("disabled");
+          }
+        });
+      });
+    });
+
+    if (showResultBtn && resultBox) {
+      showResultBtn.addEventListener("click", () => {
+        const answeredCount = Object.keys(answers).length;
+
+        if (answeredCount < totalQuestions) {
+          resultBox.innerHTML =
+            "<strong>Not yet.</strong> You have answered " +
+            answeredCount +
+            " of " +
+            totalQuestions +
+            " questions. Please answer them all first.";
+          return;
+        }
+
+        let scoreDem = 0;
+        let scoreWhig = 0;
+        Object.values(answers).forEach(party => {
+          if (party === "dem") scoreDem++;
+          if (party === "whig") scoreWhig++;
+        });
+
+        let party, text;
+
+        if (scoreDem > scoreWhig) {
+          party = "Democratic Party (Jacksonian Democrats)";
+          text =
+            "Your replies most nearly resemble the Jacksonian Democrats: you favour a limited federal government, are wary of powerful banks and financiers, and incline toward a republic of independent small producers.";
+        } else if (scoreWhig > scoreDem) {
+          party = "Whig Party";
+          text =
+            "Your replies most nearly resemble the Whigs: you are willing to see the federal government guide economic development, support a national bank, and invest in improvements that link the nation together.";
+        } else {
+          party = "A mixture of both viewpoints";
+          text =
+            "Your answers balance elements from both parties. You share the Democrats’ suspicion of concentrated power, but also recognise the Whig desire for order, planning, and national improvement.";
+        }
+
+        resultBox.innerHTML =
+          "<strong>Result: " +
+          party +
+          "</strong><div>" +
+          text +
+          "</div><div class='quiz-score'>Tally – Democrats: " +
+          scoreDem +
+          " | Whigs: " +
+          scoreWhig +
+          "</div>";
+      });
+    }
+
+    if (redoQuizBtn) {
+      redoQuizBtn.addEventListener("click", resetQuiz);
+    }
+  </script>
+</body>
+</html>
